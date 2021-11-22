@@ -48,6 +48,12 @@ namespace ProcessMonitor
             using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(string.Format("SELECT * FROM Win32_Process WHERE CommandLine like '%{0}%'", string_builder.ToString())))
             using (ManagementObjectCollection objects = searcher.Get())
             {
+                if (objects.Count <= 0)
+                {
+                    label_count.Text = "Count: 0";
+                    return;
+                }
+
                 data_grid_view_process.RowCount = objects.Count;
                 int row = 0;
                 foreach (var obj in objects)
